@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="options.css">
+    <title>Configurações — Bloqueio WhatsApp</title>
+  </head>
+  <body>
+    <header class="topbar"><div><p class="eyebrow">BLOQUEIO WHATSAPP</p><h1>Configurações</h1></div><div class="header-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.2 19 6v5.4c0 4.2-2.9 7.6-7 9.4-4.1-1.8-7-5.2-7-9.4V6l7-2.8Z"/><path d="m8.7 12 2.1 2.1 4.6-4.7"/></svg></div></header>
+    <main>
+      <p class="intro">A proteção é local a este perfil do navegador e não acessa suas mensagens.</p>
+
+      <section aria-labelledby="shortcut-heading">
+        <p class="section-label" id="shortcut-heading">ATALHO DE BLOQUEIO</p>
+        <div class="setting-card shortcut-card">
+          <div><p class="field-label">Atalho atual</p><strong id="shortcut-current">Carregando…</strong></div>
+          <button class="secondary-button" id="shortcut-settings" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h.01M10 9h.01M13 9h.01M16 9h.01M7 13h7M16 13h1"/></svg>Alterar atalho</button>
+          <p class="message" id="shortcut-message"></p>
+        </div>
+      </section>
+
+      <section aria-labelledby="auto-heading">
+        <p class="section-label" id="auto-heading">BLOQUEIO AUTOMÁTICO</p>
+        <form class="setting-card" id="settings-form">
+          <div class="setting-row"><div><label class="field-label" for="minutes">Tempo de inatividade</label><p class="helper">Bloquear após ficar ocioso</p></div><select id="minutes" aria-label="Minutos sem atividade" required><option value="1">1 min</option><option value="5">5 min</option><option value="10">10 min</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option><option value="120">120 min</option></select></div>
+          <div class="divider"></div>
+          <div class="setting-row"><div><label class="field-label" for="blur">Bloquear ao trocar de janela</label><p class="helper">Proteção imediata ao perder o foco</p></div><label class="switch"><input id="blur" type="checkbox"><span></span></label></div>
+          <button class="primary-button" type="submit">Salvar configurações</button><p class="message" id="settings-message"></p>
+        </form>
+      </section>
+
+      <section aria-labelledby="password-heading">
+        <p class="section-label" id="password-heading">TROCAR SENHA</p>
+        <form class="setting-card password-card" id="password-form">
+          <label class="field-label" for="current-password">Senha atual</label><input id="current-password" type="password" autocomplete="current-password" required>
+          <label class="field-label" for="new-password">Nova senha</label><input id="new-password" type="password" autocomplete="new-password" minlength="6" required>
+          <label class="field-label" for="confirm-password">Confirme a nova senha</label><input id="confirm-password" type="password" autocomplete="new-password" required>
+          <button class="primary-button" type="submit">Trocar senha</button><p class="message" id="password-message"></p>
+        </form>
+      </section>
+    </main>
+    <script src="options.js"></script>
+  </body>
+</html>

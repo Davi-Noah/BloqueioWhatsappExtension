@@ -1,0 +1,87 @@
+Manifest-Version: 1.0
+
+Name: PRIVACY.md
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: 4/QkRfNE7wRIzcbEbV3tf8HkX0o=
+SHA256-Digest: kfxmlGoTZd5EyvdDkxNZ964h0CgNpoYx7GLa1dYHTxg=
+
+Name: manifest.json
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: pf0p8qEtbhG2kyo7xLxBmuerkpM=
+SHA256-Digest: DFocQj8tln/l82kk1n7LCscplB3AEluklu92sbP+gFs=
+
+Name: README.md
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: JUtrK6ECJMKrGz9bADFwoNe/MIg=
+SHA256-Digest: SvFxM1YGTSGYChgLBz4iIIs9xwl1ug5g4TM+yJiOQqY=
+
+Name: src/options/options.html
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: +GeZu80APazTezYgkq+KzKPQw8g=
+SHA256-Digest: 3xrB/a+JsoSvm7coPO87BpSGCWOTQD7thTjxCrNVyCk=
+
+Name: src/options/options.js
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: BjvyJBiuhXCQyC2a56CXcgKxGwA=
+SHA256-Digest: x5DqoYYRSRp6Itpv5QwCHrsA3k+Tw5LAZHgqRnG9BtQ=
+
+Name: src/options/options.css
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: pIcxQRjLXfydb50tP8tfslEKN8A=
+SHA256-Digest: I7ruc1XdEQfmbUUWKcyEzXPX5EyYXA92l+8ftbIt5+Y=
+
+Name: src/content/lock-screen.js
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: NH8X3fm2af88eueQejqS0c/gjs8=
+SHA256-Digest: GRVEw+xY4gkKFgo+ooi7MTliO1fn78oQRdcJwKg0yY4=
+
+Name: src/background/service-worker.js
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: u9ySvE8PJgUvkiv95vk9STI/6xM=
+SHA256-Digest: z5MBI1NFdAT/n3l/HNj1BMaQu5+SVyvJymBoSHXDFFY=
+
+Name: src/popup/popup.js
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: L6DP7WmmBgWPLTmggpc4zON3MFs=
+SHA256-Digest: +XA77owXC3DVDf1V+0I9XYRjj7OOR0To328vmJT4YuU=
+
+Name: src/popup/popup.html
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: W01D5IOJDFPE68XDudfaVPrCOIc=
+SHA256-Digest: 6SwQwrosXlX3MU4Qniy8Nukw6eHkGpr9AxGN51d+FNw=
+
+Name: src/popup/popup.css
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: 4lsZaqsiwqAQh9Eg0pGWfHkaz3k=
+SHA256-Digest: owJ2I++HUwT5rP1MNEyCLyQWBUbplL6FSeOXwdbmfgU=
+
+Name: assets/icons/icon-16.png
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: Wxvv54E9cIzoGeX85b17oVp/yyo=
+SHA256-Digest: zSU6zMzo7hxvKGoxJCJtN5r3sTqdCRaEfwzCFwGvKx4=
+
+Name: assets/icons/icon-48.png
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: B0f63X94NDu+N06QDoRuB1vkRYg=
+SHA256-Digest: 6IkQQHLl83Fn1WXdY+dyf6sIQA1hVUMMfbAxJCajVtM=
+
+Name: assets/icons/icon-128.png
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: u+QI1GKbtatkJiH7ZIuBSyJWu1g=
+SHA256-Digest: B8IaUEFjiKXac68eDhjAGqjspL0kco8bURQXJyLzDG8=
+
+Name: assets/icons/icon-32.png
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: fw5TR1DWWU8f/3C371YNS2Ghlcs=
+SHA256-Digest: Yxkx7zu2o9j5X1uACJaHiAWq0FPLWKgUn+j/BRw83E8=
+
+Name: META-INF/cose.manifest
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: Z/FQGt31zsKxqxMmM+z3rRWmt1o=
+SHA256-Digest: Hw4Wy3KFwgKO2G7FVtLsoOM25DXqkAZCbNr3GVTw/4I=
+
+Name: META-INF/cose.sig
+Digest-Algorithms: SHA1 SHA256
+SHA1-Digest: G6VnxKQxdrytjrnntKxOXGXqZDo=
+SHA256-Digest: SnO6IWScwLD87hsLIrCJ8PgBdjczEJA91qvjTL9kz/c=
+
