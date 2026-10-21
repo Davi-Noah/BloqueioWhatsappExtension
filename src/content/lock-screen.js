@@ -3,10 +3,15 @@
   let host;
   let shadow;
   let locked = true;
-  let settings = { inactivityMinutes: 10, lockOnWindowBlur: false };
+  let settings = {
+    inactivityMinutes: 10,
+    lockOnWindowBlur: false,
+    passwordProtectionEnabled: false
+  };
   let lastActivity = Date.now();
   let checking = false;
   let bodyLockState;
+  let screenMode;
 
   const styles = `
     :host { all: initial; }
@@ -114,6 +119,7 @@
   function render(mode, error = "") {
     ensureMounted();
     if (!shadow) return;
+    screenMode = mode;
     setUnderlyingPageBlocked(true);
     const isSetup = mode === "setup";
     const style = element("style", { text: styles });
@@ -178,16 +184,19 @@
 
   function unlock() {
     locked = false;
+    screenMode = undefined;
     lastActivity = Date.now();
     setUnderlyingPageBlocked(false);
     host?.remove();
   }
 
-  async function lock() {
-    if (locked) return;
+  async function lock(mode = "unlock") {
+    if (!settings.passwordProtectionEnabled) return false;
+    if (locked && screenMode === mode) return true;
     locked = true;
     await send({ type: "lock-tab" });
-    render("unlock");
+    render(mode);
+    return true;
   }
 
   function applyState(state) {
@@ -199,6 +208,7 @@
     render("unlock");
     const state = await send({ type: "get-state" });
     applyState(state ?? {});
+    if (!settings.passwordProtectionEnabled) return unlock();
     if (!state?.hasPassword) return render("setup");
     render("unlock");
   }
@@ -206,19 +216,31 @@
   ["keydown", "mousedown", "pointerdown", "touchstart", "scroll"].forEach((eventName) => {
     document.addEventListener(eventName, () => { if (!locked) lastActivity = Date.now(); }, true);
   });
-  window.addEventListener("blur", () => { if (!locked && settings.lockOnWindowBlur) lock(); });
+  window.addEventListener("blur", () => {
+    if (!locked && settings.passwordProtectionEnabled && settings.lockOnWindowBlur) lock();
+  });
 
   window.setInterval(() => {
-    if (!locked && Date.now() - lastActivity >= settings.inactivityMinutes * 60_000) lock();
+    if (!locked
+      && settings.passwordProtectionEnabled
+      && settings.inactivityMinutes > 0
+      && Date.now() - lastActivity >= settings.inactivityMinutes * 60_000) lock();
   }, 1_000);
 
   window.setInterval(async () => {
-    if (locked || checking) return;
+    if (checking) return;
     checking = true;
     try {
       const state = await send({ type: "get-state" });
+      const wasEnabled = settings.passwordProtectionEnabled;
       applyState(state ?? {});
-      if (!state?.hasPassword) lock();
+      if (!settings.passwordProtectionEnabled) {
+        if (locked) unlock();
+      } else if (!state?.hasPassword) {
+        await lock("setup");
+      } else if (!wasEnabled && !locked) {
+        await lock("unlock");
+      }
     } finally {
       checking = false;
     }
@@ -226,14 +248,27 @@
 
   api.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     if (message?.type === "force-lock") {
-      lock().then(() => sendResponse({ ok: true }));
+      send({ type: "get-state" })
+        .then((state) => {
+          applyState(state ?? {});
+          return lock(state?.hasPassword ? "unlock" : "setup");
+        })
+        .then((ok) => sendResponse({ ok }))
+        .catch(() => sendResponse({ ok: false }));
       return true;
     }
   });
 
   // Uma troca de senha deve encerrar a sessão de todas as abas abertas.
   api.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName === "local" && changes.passwordRecord && !locked) lock();
+    if (areaName === "local" && changes.settings?.newValue) {
+      settings = { ...settings, ...changes.settings.newValue };
+      if (!settings.passwordProtectionEnabled && locked) unlock();
+    }
+    if (areaName === "local"
+      && changes.passwordRecord
+      && !locked
+      && settings.passwordProtectionEnabled) lock();
   });
 
   document.addEventListener("focusin", (event) => {
@@ -246,6 +281,6 @@
     ensureMounted();
     setUnderlyingPageBlocked(true);
   });
-  rootObserver.observe(document, { childList: true, subtree: true });
+  rootObserver.observe(document.documentElement ?? document, { childList: true });
   initialize().catch(() => render("unlock", "Não foi possível iniciar o bloqueio."));
 })();

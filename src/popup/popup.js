@@ -30,7 +30,12 @@ async function initialize() {
     hint.hidden = false;
     return;
   }
-  if (!extensionState?.hasPassword) {
+  if (!extensionState?.settings?.passwordProtectionEnabled) {
+    statusTitle.textContent = "Proteção por senha desativada";
+    status.textContent = "A coluna recolhível continua disponível no WhatsApp Web.";
+    return;
+  }
+  if (!extensionState.hasPassword) {
     statusTitle.textContent = "Proteção não configurada";
     status.textContent = "Crie uma senha na tela do WhatsApp Web para ativar a proteção.";
     return;

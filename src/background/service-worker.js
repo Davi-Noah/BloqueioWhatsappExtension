@@ -4,7 +4,9 @@ const PASSWORD_KEY = "passwordRecord";
 const SETTINGS_KEY = "settings";
 const DEFAULT_SETTINGS = Object.freeze({
   inactivityMinutes: 10,
-  lockOnWindowBlur: false
+  lockOnWindowBlur: false,
+  passwordProtectionEnabled: false,
+  sidebarCollapseMode: "avatars"
 });
 
 function bytesToBase64(bytes) {
@@ -74,18 +76,28 @@ async function passwordMatches(password, record) {
   return equalBytes(computedHash, expectedHash);
 }
 
-async function getSettings() {
+async function getSettings(hasPassword) {
   const stored = await api.storage.local.get(SETTINGS_KEY);
-  return { ...DEFAULT_SETTINGS, ...(stored[SETTINGS_KEY] ?? {}) };
+  const saved = stored[SETTINGS_KEY] ?? {};
+  return {
+    ...DEFAULT_SETTINGS,
+    ...saved,
+    // Mantém a proteção ligada para quem já usava a extensão antes desta opção.
+    passwordProtectionEnabled: typeof saved.passwordProtectionEnabled === "boolean"
+      ? saved.passwordProtectionEnabled
+      : Boolean(hasPassword)
+  };
 }
 
 function sanitizeSettings(value) {
   const minutes = Number(value.inactivityMinutes);
   return {
     inactivityMinutes: Number.isFinite(minutes)
-      ? Math.max(1, Math.min(120, Math.round(minutes)))
+      ? (minutes === 0 ? 0 : Math.max(1, Math.min(120, Math.round(minutes))))
       : DEFAULT_SETTINGS.inactivityMinutes,
-    lockOnWindowBlur: Boolean(value.lockOnWindowBlur)
+    lockOnWindowBlur: Boolean(value.lockOnWindowBlur),
+    passwordProtectionEnabled: Boolean(value.passwordProtectionEnabled),
+    sidebarCollapseMode: value.sidebarCollapseMode === "hidden" ? "hidden" : "avatars"
   };
 }
 
@@ -93,7 +105,7 @@ async function stateFor() {
   const record = await getPasswordRecord();
   return {
     hasPassword: Boolean(record),
-    settings: await getSettings()
+    settings: await getSettings(Boolean(record))
   };
 }
 
@@ -157,11 +169,14 @@ api.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 api.commands?.onCommand.addListener(async (command) => {
-  if (command !== "lock-current-whatsapp-tab") return;
+  if (command !== "lock-current-whatsapp-tab" && command !== "toggle-conversation-sidebar") return;
   const [tab] = await api.tabs.query({ active: true, currentWindow: true });
   if (!tab?.id) return;
   try {
-    await api.tabs.sendMessage(tab.id, { type: "force-lock" });
+    const type = command === "lock-current-whatsapp-tab"
+      ? "force-lock"
+      : "toggle-conversation-sidebar";
+    await api.tabs.sendMessage(tab.id, { type });
   } catch {
     // A aba atual não é o WhatsApp Web ou ainda não terminou de carregar.
   }

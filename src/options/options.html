@@ -9,21 +9,28 @@
   <body>
     <header class="topbar"><div><p class="eyebrow">BLOQUEIO WHATSAPP</p><h1>Configurações</h1></div><div class="header-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.2 19 6v5.4c0 4.2-2.9 7.6-7 9.4-4.1-1.8-7-5.2-7-9.4V6l7-2.8Z"/><path d="m8.7 12 2.1 2.1 4.6-4.7"/></svg></div></header>
     <main>
-      <p class="intro">A proteção é local a este perfil do navegador e não acessa suas mensagens.</p>
+      <p class="intro">Personalize a coluna de conversas e, se quiser, proteja o WhatsApp com uma senha local.</p>
 
       <section aria-labelledby="shortcut-heading">
-        <p class="section-label" id="shortcut-heading">ATALHO DE BLOQUEIO</p>
+        <p class="section-label" id="shortcut-heading">ATALHOS</p>
         <div class="setting-card shortcut-card">
-          <div><p class="field-label">Atalho atual</p><strong id="shortcut-current">Carregando…</strong></div>
-          <button class="secondary-button" id="shortcut-settings" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h.01M10 9h.01M13 9h.01M16 9h.01M7 13h7M16 13h1"/></svg>Alterar atalho</button>
+          <div class="shortcut-list">
+            <div><p class="field-label">Bloquear a aba</p><strong id="shortcut-current">Carregando…</strong></div>
+            <div><p class="field-label">Recolher conversas</p><strong id="sidebar-shortcut-current">Carregando…</strong></div>
+          </div>
+          <button class="secondary-button" id="shortcut-settings" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h.01M10 9h.01M13 9h.01M16 9h.01M7 13h7M16 13h1"/></svg>Alterar atalhos</button>
           <p class="message" id="shortcut-message"></p>
         </div>
       </section>
 
-      <section aria-labelledby="auto-heading">
-        <p class="section-label" id="auto-heading">BLOQUEIO AUTOMÁTICO</p>
+      <section aria-labelledby="preferences-heading">
+        <p class="section-label" id="preferences-heading">PRIVACIDADE E INTERFACE</p>
         <form class="setting-card" id="settings-form">
-          <div class="setting-row"><div><label class="field-label" for="minutes">Tempo de inatividade</label><p class="helper">Bloquear após ficar ocioso</p></div><select id="minutes" aria-label="Minutos sem atividade" required><option value="1">1 min</option><option value="5">5 min</option><option value="10">10 min</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option><option value="120">120 min</option></select></div>
+          <div class="setting-row"><div><label class="field-label" for="password-enabled">Proteção por senha</label><p class="helper">Opcional; desative para abrir o WhatsApp normalmente</p></div><label class="switch"><input id="password-enabled" type="checkbox"><span></span></label></div>
+          <div class="divider"></div>
+          <div class="setting-row"><div><label class="field-label" for="sidebar-mode">Coluna recolhida</label><p class="helper">Escolha se os avatares continuam visíveis</p></div><select id="sidebar-mode"><option value="avatars">Mostrar fotos</option><option value="hidden">Ocultar tudo</option></select></div>
+          <div class="divider"></div>
+          <div class="setting-row"><div><label class="field-label" for="minutes">Tempo de inatividade</label><p class="helper">Bloquear após ficar ocioso</p></div><select id="minutes" aria-label="Minutos sem atividade" required><option value="0">Nunca</option><option value="1">1 min</option><option value="5">5 min</option><option value="10">10 min</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option><option value="120">120 min</option></select></div>
           <div class="divider"></div>
           <div class="setting-row"><div><label class="field-label" for="blur">Bloquear ao trocar de janela</label><p class="helper">Proteção imediata ao perder o foco</p></div><label class="switch"><input id="blur" type="checkbox"><span></span></label></div>
           <button class="primary-button" type="submit">Salvar configurações</button><p class="message" id="settings-message"></p>
@@ -31,7 +38,7 @@
       </section>
 
       <section aria-labelledby="password-heading">
-        <p class="section-label" id="password-heading">TROCAR SENHA</p>
+        <p class="section-label" id="password-heading">SENHA</p>
         <form class="setting-card password-card" id="password-form">
           <label class="field-label" for="current-password">Senha atual</label><input id="current-password" type="password" autocomplete="current-password" required>
           <label class="field-label" for="new-password">Nova senha</label><input id="new-password" type="password" autocomplete="new-password" minlength="6" required>

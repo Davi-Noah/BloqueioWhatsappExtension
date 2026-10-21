@@ -15,13 +15,17 @@ async function load() {
   const settings = response.settings;
   document.querySelector("#minutes").value = settings.inactivityMinutes;
   document.querySelector("#blur").checked = settings.lockOnWindowBlur;
+  document.querySelector("#password-enabled").checked = settings.passwordProtectionEnabled;
+  document.querySelector("#sidebar-mode").value = settings.sidebarCollapseMode;
   if (!response.hasPassword) {
     passwordForm.querySelector("button").disabled = true;
-    showMessage(passwordMessage, "Crie a primeira senha ao abrir o WhatsApp Web.");
+    showMessage(passwordMessage, "Ative a proteção e abra o WhatsApp Web para criar a primeira senha.");
   }
   const commands = await api.commands.getAll();
   const lockCommand = commands.find((command) => command.name === "lock-current-whatsapp-tab");
+  const sidebarCommand = commands.find((command) => command.name === "toggle-conversation-sidebar");
   document.querySelector("#shortcut-current").textContent = lockCommand?.shortcut || "Não definido";
+  document.querySelector("#sidebar-shortcut-current").textContent = sidebarCommand?.shortcut || "Não definido";
 }
 
 document.querySelector("#shortcut-settings").addEventListener("click", async () => {
@@ -42,7 +46,9 @@ settingsForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const response = await api.runtime.sendMessage({ type: "save-settings", settings: {
     inactivityMinutes: document.querySelector("#minutes").value,
-    lockOnWindowBlur: document.querySelector("#blur").checked
+    lockOnWindowBlur: document.querySelector("#blur").checked,
+    passwordProtectionEnabled: document.querySelector("#password-enabled").checked,
+    sidebarCollapseMode: document.querySelector("#sidebar-mode").value
   }});
   showMessage(settingsMessage, response.ok ? "Configurações salvas." : response.error, !response.ok);
 });

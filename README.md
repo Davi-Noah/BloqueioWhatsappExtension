@@ -1,6 +1,6 @@
 # Bloqueio para WhatsApp Web
 
-Extensão local para Chrome e Firefox que cobre o WhatsApp Web com uma senha. Ela não lê, altera ou envia mensagens.
+Extensão local para Chrome e Firefox com coluna de conversas recolhível e proteção opcional por senha. Ela não lê, altera ou envia mensagens.
 
 ## Instalação para desenvolvimento
 
@@ -20,10 +20,13 @@ O Zen Browser usa o mesmo fluxo do Firefox: abra `about:debugging#/runtime/this-
 
 ## Como funciona
 
-- Na primeira abertura de `https://web.whatsapp.com/`, crie uma senha de no mínimo seis caracteres.
+- A coluna de conversas pode ser recolhida pelo botão ao lado do ícone de Conversas, pelo próprio ícone quando a área já está aberta ou pelo atalho `Alt+Shift+C`.
+- Por padrão, a coluna recolhida mantém somente os avatares. Em **Configurações > Coluna recolhida**, também é possível ocultá-la completamente.
+- A proteção por senha é opcional. Ao ativá-la nas configurações sem uma senha existente, o WhatsApp solicita a criação de uma senha de no mínimo seis caracteres.
 - A senha não é salva em texto: somente um verificador PBKDF2 com salt é persistido no armazenamento local da extensão.
-- Cada recarga da página é bloqueada; também é possível bloquear pela extensão ou por inatividade.
+- Com a proteção ativa, também é possível bloquear pela extensão, ao trocar de janela ou por inatividade. O tempo automático pode ser definido como **Nunca**.
 - O atalho sugerido `Ctrl+Shift+L` bloqueia a aba atual do WhatsApp Web. Em **Configurações > Alterar atalho**, a extensão abre a tela nativa para o usuário escolher outra combinação.
+- A preferência da coluna é mantida nas próximas aberturas.
 
 ## Limitações de segurança
 
